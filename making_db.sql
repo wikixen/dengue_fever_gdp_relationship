@@ -57,7 +57,7 @@ DROP COLUMN INDEX;
 --range of years
 -- Creating table
 CREATE TABLE DENGUEDI_GDP AS
-SELECT *
+SELECT entity, code, year, population, total_cases, death_rate
 FROM DENGUE_DEATHS
 LEFT JOIN DENGUE_INCIDENCE
 USING(code,year,entity)
