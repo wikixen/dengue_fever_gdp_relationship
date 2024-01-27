@@ -1,14 +1,14 @@
 --Filling all tables with values from csv's
  / COPY DENGUE_DEATHS 
-FROM '"C:/Users/Benny/Downloads/data/dengue_deaths.csv"' 
+FROM '"/data/dengue_deaths.csv"' 
 DELIMITER ',' CSV HEADER ;
 
 / COPY DENGUE_INCIDENCE
-FROM 'C:/Users/Benny/Downloads/data/dengue_incidence.csv'
+FROM '/data/dengue_incidence.csv'
 DELIMITER ',' CSV HEADER ;
 
 / COPY GDP
-FROM 'C:/Users/Benny/Downloads/data/gdp.csv'
+FROM '/data/gdp.csv'
 DELIMITER ',' CSV HEADER ;
 
 --Some light clean up to remove unnecessary cells+Renaming cols
