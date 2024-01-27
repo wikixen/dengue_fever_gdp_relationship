@@ -1,14 +1,18 @@
 --Filling all tables with values from csv's
  / COPY DENGUE_DEATHS 
-FROM '/data/dengue_deaths.csv' 
+FROM '"C:/Users/Benny/Downloads/data/dengue_deaths.csv"' 
 DELIMITER ',' CSV HEADER ;
 
 / COPY DENGUE_INCIDENCE
-FROM '/data/dengue_incidence.csv'
+FROM 'C:/Users/Benny/Downloads/data/dengue_incidence.csv'
 DELIMITER ',' CSV HEADER ;
 
 / COPY GDP
-FROM '/data/gdp.csv'
+FROM 'C:/Users/Benny/Downloads/data/gdp.csv'
+DELIMITER ',' CSV HEADER ;
+
+/ COPY POPULATION 
+FROM 'C:/Users/Benny/Downloads/data/population.csv' 
 DELIMITER ',' CSV HEADER ;
 
 --Some light clean up to remove unnecessary cells+Renaming cols
@@ -44,6 +48,8 @@ VALUES(g."1991",1991),(g."1992",1992),(g."1993",1993),(g."1994",1994),(g."1995",
 	(g."2010",2010),(g."2011",2011),(g."2012",2012),(g."2013",2013),(g."2014",2014),(g."2015",2015),(g."2016",2016),(g."2017",2017),(g."2018",2018),(g."2019",2019)
 ) AS C(GDP_VAL,YEAR);
 
+--Renaming cols in population
+ALTER TABLE POPULATION RENAME COLUMN "country name" TO entity;
 
 --Joining to make a complete table; Joining on deaths since it has the smallest
 --range of years
@@ -54,4 +60,6 @@ FROM DENGUE_DEATHS
 LEFT JOIN DENGUE_INCIDENCE
 USING(code,year,entity)
 LEFT JOIN GDP2
-USING(code,entity,year);
+USING(code,entity,year)
+left join POPULATION
+using(entity,year);
