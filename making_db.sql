@@ -50,6 +50,8 @@ VALUES(g."1991",1991),(g."1992",1992),(g."1993",1993),(g."1994",1994),(g."1995",
 
 --Renaming cols in population
 ALTER TABLE POPULATION RENAME COLUMN "country name" TO entity;
+ALTER TABLE POPULATION
+DROP COLUMN INDEX;
 
 --Joining to make a complete table; Joining on deaths since it has the smallest
 --range of years
