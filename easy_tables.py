@@ -3,9 +3,9 @@ import pandas as pd
 from sqlalchemy import create_engine as cre
 import pathlib as pthl
 
-df_path = pthl.Path('C:/Users/Benny/Downloads/data')
+df_path = pthl.Path('/data')
 
-engine = cre('postgresql://postgres:Pacman4Life!@localhost:5432/main')
+engine = cre('postgresql://username:password@localhost:port/main')
 
 for x in df_path.iterdir():
     df = pd.read_csv(x)
