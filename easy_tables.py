@@ -3,7 +3,7 @@ import pandas as pd
 from sqlalchemy import create_engine as cre
 import pathlib as pthl
 
-df_path = pthl.Path('C:/Users/Benny/Downloads/csvs')
+df_path = pthl.Path('C:/Users/Benny/Downloads/data')
 
 engine = cre('postgresql://postgres:Pacman4Life!@localhost:5432/main')
 
