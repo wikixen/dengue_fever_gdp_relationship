@@ -1,6 +1,6 @@
 --Filling all tables with values from csv's
  / COPY DENGUE_DEATHS 
-FROM '"/data/dengue_deaths.csv"' 
+FROM '/data/dengue_deaths.csv' 
 DELIMITER ',' CSV HEADER ;
 
 / COPY DENGUE_INCIDENCE
