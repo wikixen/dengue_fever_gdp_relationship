@@ -2,7 +2,8 @@
 --dengue_deaths contains the aggregate of regions which I dont need or want
 DELETE
 FROM DENGUE_DEATHS
-WHERE CODE IS NULL;
+WHERE CODE IS NULL
+	OR ENTITY='World';
 
 ALTER TABLE DENGUE_DEATHS
 DROP COLUMN INDEX;
