@@ -11,13 +11,22 @@ The dengue data consisted of two datasets from ourwouldindata.org; One was the d
 https://ourworldindata.org/grapher/dengue-incidence
 <br>
 https://ourworldindata.org/grapher/dengue-fever-deaths
-<br>
-The incidence data strecthes as far back as 1990 but the death data starts from the year 2000. Also it appears that even countries with colder climates like those in Scandinavia do have the occasional death from Dengue; This could be because people may travel to countries with warmer climates, get infected, and die in the countries with colder climates. I contemplated gathering temperature data and removing countries based off of that information but instead used the incidence rate to achieve the same result; If a country has a mean of 0 infections through the 20 year span of data it is a country where getting infected by dengue isn't possible.
+
+The incidence data strecthes as far back as 1990 but the death data starts from the year 2000; They both end at the year 2019.
+
+Also it appears that even countries with colder climates like those in Scandinavia do have the occasional death from Dengue; This could be because people may travel to countries with warmer climates, get infected, and die in the countries with colder climates. I contemplated gathering temperature data and removing countries based off of that information but instead used the incidence rate to achieve the same result; If a country has a mean of 0 infections through the 20 year span of data it is a country where getting infected by dengue isn't possible. 
+
 I downloaded the GDP data set from the worldbank website which can found using the following link: https://data.worldbank.org/indicator/NY.GDP.MKTP.CD 
 <br>
-The GDP data stretched as far back as 1960 and ended on 2022. Various cells were null but these were mostly in the years before 2000
+The GDP data stretched as far back as 1960 and ended on 2022. Various cells were null but these were mostly in the years before 2000. I also used excel to delete all the data before 1990 as it would be useless and it had so many nulls that even I wanted to use it, doing so would be useless.
+
+For all three datasets various territories or contested land was left with no data (Puerto Rico, Western Sahara, etc.) but this is very common with global datasets so it's something that I ignored.
 
 # Work
 ## QA
 
 Excel, python, postgreSQL, &amp; tableau.
+
+# TODO
+- FINISH THE DATA SECTION
+- FILL OUT QA SECTION
