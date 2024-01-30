@@ -40,8 +40,9 @@ df_path = pthl.Path('path') #Path of the folder that contains all csv files
 engine = cre('postgresql://username:password@localhost:port_num/main')
 
 for x in df_path.iterdir(): #Iterates through folder
-    df = pd.read_csv(x) 
-    df.columns = [c.lower() for c in df.columns] #Make all the col names lowercase cause it may cause issues if I dont
+    df = pd.read_csv(x)
+    #Make all the col names lowercase cause it may cause issues if I dont
+    df.columns = [c.lower() for c in df.columns]
     df.to_sql(x.stem, engine) #Names the table after the filename
 ```
 After this I could now fill the table with the data, which I did using postgreSQL:
