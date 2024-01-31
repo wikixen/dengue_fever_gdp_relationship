@@ -25,7 +25,7 @@ The final dataset that I used was a population data set from ourworldindata whic
 For all four datasets various territories or contested land was left with no data (Puerto Rico, Western Sahara, etc.) but this is very common with global datasets so it's something that I ignored.
 
 ## Tools
-I used Excel to give the data a cursory view and to delete some cols that I thought were unecessary like aforementioned GDP data or a header that came with the dengue data. Afterwards I wanted to load the data into a PostgreSQL database, perform data analysis in Python, and then make a dashboard using Tableau Public. I used pgAdmin4 as an interface for SQL.
+I used Excel to give the data a cursory view and to delete some cols that I thought were unecessary like aforementioned GDP data or a header that came with the dengue data. Afterwards I wanted to load the data into a PostgreSQL database, perform data analysis in Python(Jupyter), and then make a dashboard using Tableau Public. I used pgAdmin4 as an interface for SQL.
 
 # Work
 ## Importing Data
@@ -94,9 +94,11 @@ CREATE TABLE GDP2 AS
 SELECT G."country name" AS ENTITY, G."country code" AS CODE, C.*
 FROM GDP AS G
 CROSS JOIN LATERAL(
-VALUES(g."1991",1991),(g."1992",1992),(g."1993",1993),(g."1994",1994),(g."1995",1995),(g."1996",1996),(g."1997",1997),(g."1998",1998),(g."1999",1999),
-	(g."2000",2000),(g."2001",2001),(g."2002",2002),(g."2003",2003),(g."2004",2004),(g."2005",2005),(g."2006",2006),(g."2007",2007),(g."2008",2008),(g."2009",2009),
-	(g."2010",2010),(g."2011",2011),(g."2012",2012),(g."2013",2013),(g."2014",2014),(g."2015",2015),(g."2016",2016),(g."2017",2017),(g."2018",2018),(g."2019",2019)
+VALUES(g."1991",1991),(g."1992",1992),(g."1993",1993),(g."1994",1994),(g."1995",1995),(g."1996",1996),(g."1997",1997),
+	(g."1998",1998),(g."1999",1999),(g."2000",2000),(g."2001",2001),(g."2002",2002),(g."2003",2003),(g."2004",2004),
+	(g."2005",2005),(g."2006",2006),(g."2007",2007),(g."2008",2008),(g."2009",2009),(g."2010",2010),(g."2011",2011),
+	(g."2012",2012),(g."2013",2013),(g."2014",2014),(g."2015",2015),(g."2016",2016),(g."2017",2017),(g."2018",2018),
+	(g."2019",2019)
 ) AS C(GDP_VAL,YEAR);
 
 --Renaming cols in population
@@ -116,6 +118,12 @@ LEFT JOIN GDP2
 USING(code,entity,year)
 left join POPULATION
 using(entity,year);
+```
+I had to do some final QA in python; I needed to fix the one to many issue (Every country had multiple instances because the years), so I made a pivot table and then flattened it:
+```
+DENGUEDI_GDP = DENGUEDI_GDP.pivot_table(['population','total_cases','total_deaths','gdp_val'],['entity','code'],'year').reset_index()
+DENGUEDI_GDP.columns = [ '_'.join([str(c) for c in c_list]) for c_list in DENGUEDI_GDP.columns.values ]
+DENGUEDI_GDP.head()
 ```
 
 
