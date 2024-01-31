@@ -120,10 +120,11 @@ left join POPULATION
 using(entity,year);
 ```
 I had to do some final QA in python; I needed to fix the one to many issue (Every country had multiple instances because the years), so I made a pivot table and then flattened it:
+
 ```
-DENGUEDI_GDP = DENGUEDI_GDP.pivot_table(['population','total_cases','total_deaths','gdp_val'],['entity','code'],'year').reset_index()
-DENGUEDI_GDP.columns = [ '_'.join([str(c) for c in c_list]) for c_list in DENGUEDI_GDP.columns.values ]
-DENGUEDI_GDP.head()
+df = df.pivot_table(['population','total_cases','total_deaths','gdp_val'],['entity','code'],'year').reset_index()
+df.columns = [ '_'.join([str(c) for c in c_list]) for c_list in df.columns.values ]
+df.head()
 ```
 
 
