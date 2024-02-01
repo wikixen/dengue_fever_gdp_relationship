@@ -29,96 +29,12 @@ I used Excel to give the data a cursory view and to delete some cols that I thou
 
 # Work
 ## Importing Data
-After giving the data a look in Excel, I wanted to import the data into pgAdmin but in order to do so I had to create a table to import the data into; This would take way too long since the GDP dataset has a column for each year. In order to automate this process I made a script in python that would connect to the database, would read the csv, and create an empty table using the column names. 
-```
-import pandas as pd
-from sqlalchemy import create_engine as cre
-import pathlib as pthl
+After giving the data a look in Excel, I wanted to import the data into pgAdmin but in order to do so I had to create a table to import the data into; This would take way too long since the GDP dataset has a column for each year. In order to automate this process I made a script in python that would connect to the database, would read the csv, and create an empty table using the column names. See easy_tables.py 
 
-df_path = pthl.Path('path') #Path of the folder that contains all csv files
-
-engine = cre('postgresql://username:password@localhost:port_num/main')
-
-for x in df_path.iterdir(): #Iterates through folder
-    df = pd.read_csv(x)
-    #Make all the col names lowercase cause it may cause issues if I dont
-    df.columns = [c.lower() for c in df.columns]
-    df.to_sql(x.stem, engine) #Names the table after the filename
-```
-After this I could now fill the table with the data, which I did using postgreSQL:
-```
- / COPY DENGUE_DEATHS 
-FROM '"path/dengue_deaths.csv"' 
-DELIMITER ',' CSV HEADER ;
-
-/ COPY DENGUE_INCIDENCE
-FROM 'path/dengue_incidence.csv'
-DELIMITER ',' CSV HEADER ;
-
-/ COPY GDP
-FROM 'path/gdp.csv'
-DELIMITER ',' CSV HEADER ;
-
-/ COPY POPULATION 
-FROM 'path/population.csv' 
-DELIMITER ',' CSV HEADER ;
-```
+After this I could now fill the table with the data, which I did using postgreSQL(See import_data SQL)
 ## Merge
-I now had to clean the data and merge it:
-```
---dengue_deaths contains the aggregate of regions which I dont need or want
-DELETE
-FROM DENGUE_DEATHS
-WHERE CODE IS NULL
-	OR ENTITY='World';
+I now had to clean the data and merge it(making_db.sql).
 
-ALTER TABLE DENGUE_DEATHS
-DROP COLUMN INDEX;
-
-ALTER TABLE DENGUE_DEATHS RENAME COLUMN "deaths - cause: dengue - sex: both sexes - age_group: allages" TO DEATH_RATE;
-
---Also contains region aggregates
-DELETE
-FROM DENGUE_INCIDENCE
-WHERE ENTITY like '%(WHO)'
-	OR ENTITY like '%(WB)';
-
-ALTER TABLE DENGUE_INCIDENCE
-DROP COLUMN INDEX;
-
-ALTER TABLE DENGUE_INCIDENCE RENAME COLUMN "number of new cases of dengue, in both sexes aged all ages" TO TOTAL_CASES;
-
---I need to condense all the year cols into one col called year with the gdp val in a new col to merge
---I made a new table to do this
-CREATE TABLE GDP2 AS
-SELECT G."country name" AS ENTITY, G."country code" AS CODE, C.*
-FROM GDP AS G
-CROSS JOIN LATERAL(
-VALUES(g."1991",1991),(g."1992",1992),(g."1993",1993),(g."1994",1994),(g."1995",1995),(g."1996",1996),(g."1997",1997),
-	(g."1998",1998),(g."1999",1999),(g."2000",2000),(g."2001",2001),(g."2002",2002),(g."2003",2003),(g."2004",2004),
-	(g."2005",2005),(g."2006",2006),(g."2007",2007),(g."2008",2008),(g."2009",2009),(g."2010",2010),(g."2011",2011),
-	(g."2012",2012),(g."2013",2013),(g."2014",2014),(g."2015",2015),(g."2016",2016),(g."2017",2017),(g."2018",2018),
-	(g."2019",2019)
-) AS C(GDP_VAL,YEAR);
-
---Renaming cols in population
-ALTER TABLE POPULATION RENAME COLUMN "country name" TO entity;
-ALTER TABLE POPULATION
-DROP COLUMN INDEX;
-
---Joining to make a complete table; Joining on deaths since it has the smallest
---range of years
--- Creating table
-CREATE TABLE DENGUEDI_GDP AS
-SELECT entity, code, year, population, total_cases, death_rate, gdp_val
-FROM DENGUE_DEATHS
-LEFT JOIN DENGUE_INCIDENCE
-USING(code,year,entity)
-LEFT JOIN GDP2
-USING(code,entity,year)
-left join POPULATION
-using(entity,year);
-```
 I had to do some final QA in python; I needed to fix the one to many issue (Every country had multiple instances because the years), so I made a pivot table and then flattened it:
 ```
 df = df.pivot_table(['population','total_cases','total_deaths','gdp_val'],['entity','code'],'year').reset_index()
