@@ -55,3 +55,12 @@ using(entity,year);
 delete 
 from denguedi_gdp
 where gdp_val is null or total_cases is null or total_deaths is null;
+
+delete 
+from denguedi_gdp
+where entity in
+(
+	select entity from denguedi_gdp
+	group by entity
+	having count(entity)<20
+);
