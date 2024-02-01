@@ -52,10 +52,12 @@ USING(code,entity,year)
 left join POPULATION
 using(entity,year);
 
+--Deletes all cells with a null value
 delete 
 from denguedi_gdp
 where gdp_val is null or total_cases is null or total_deaths is null;
 
+--Deletes all countries with less than 20 rows since >20 rows means the data is incomplete
 delete 
 from denguedi_gdp
 where entity in
