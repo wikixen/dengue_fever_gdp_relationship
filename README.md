@@ -22,14 +22,14 @@ The GDP data stretched as far back as 1960 and ended on 2022. Various cells were
 
 The final dataset that I used was a population data set from ourworldindata which I downloaded just in case I needed population data.
 
-For all four datasets various territories or contested land was left with no data (Puerto Rico, Western Sahara, etc.) but this is very common with global datasets so it's something that I ignored.
+For all four datasets various territories or contested land was left with no data (Puerto Rico, Western Sahara, etc.) but this is very common with global datasets so it's something that I ignored. However there were some exceptions where the NULL values were more important. Certain countries for example lacked their GDP values; For countries like Russia it doesn't matter because the incidence rate is 0 but for countries like Vietnam which does have dengue cases & deaths it means my analysis will be lacking.
 
 ## Tools
 I used Excel to give the data a cursory view and to delete some cols that I thought were unecessary like aforementioned GDP data or a header that came with the dengue data. Afterwards I wanted to load the data into a PostgreSQL database, perform data analysis in Python(Jupyter), and then make a dashboard using Tableau Public. I used pgAdmin4 as an interface for SQL.
 
 # Work
 ## Importing Data
-After giving the data a look in Excel, I wanted to import the data into pgAdmin but in order to do so I had to create a table to import the data into; This would take way too long since the GDP dataset has a column for each year. In order to automate this process I made a script in python that would connect to the database, would read the csv, and create an empty table using the column names.
+After giving the data a look in Excel, I wanted to import the data into pgAdmin but in order to do so I had to create a table to import the data into; This would take way too long since the GDP dataset has a column for each year. In order to automate this process I made a script in python that would connect to the database, would read the csv, and create an empty table using the column names. 
 ```
 import pandas as pd
 from sqlalchemy import create_engine as cre
@@ -63,7 +63,7 @@ DELIMITER ',' CSV HEADER ;
 FROM 'path/population.csv' 
 DELIMITER ',' CSV HEADER ;
 ```
-## QA
+## Merge
 I now had to clean the data and merge it:
 ```
 --dengue_deaths contains the aggregate of regions which I dont need or want
@@ -120,15 +120,16 @@ left join POPULATION
 using(entity,year);
 ```
 I had to do some final QA in python; I needed to fix the one to many issue (Every country had multiple instances because the years), so I made a pivot table and then flattened it:
-
 ```
 df = df.pivot_table(['population','total_cases','total_deaths','gdp_val'],['entity','code'],'year').reset_index()
 df.columns = [ '_'.join([str(c) for c in c_list]) for c_list in df.columns.values ]
 df.head()
 ```
+I use both the merged table and the flattened pivot table for my analysis.
+## Analysis
+As stated before there are some NULL values for certain countries that make my analysis incomplete. In total there 516 rows where either total cases, total deaths, or gdp is a null value; For some of these countries all data for all 20 years is missing but for others there are simply small gaps in the data. In total 29 countries have missing data and I decided to remove them as they are of no use and there isn't a value I could replace them with. 
 
-
-Excel, python, postgreSQL, &amp; tableau.
+ python, &amp; tableau.
 
 # TODO
 - FIND POPULATION DATA LINK
