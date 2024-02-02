@@ -20,7 +20,7 @@ I downloaded the GDP dataset from the worldbank website which can found using th
 <br>
 The GDP data stretched as far back as 1960 and ended on 2022. Various cells were null but these were mostly in the years before 2000. I also used excel to delete all the data before 1990 as it would be useless and it had so many nulls that even I wanted to use it, doing so would be useless.
 
-The final dataset that I used was a population data set from ourworldindata which I downloaded just in case I needed population data.
+The final dataset that I used was a population data set from <a href="https://ourworldindata.org/population-growth">ourworldindata</a> which I downloaded just in case I needed population data.
 
 For all four datasets various territories or contested land was left with no data (Puerto Rico, Western Sahara, etc.) but this is very common with global datasets so it's something that I ignored. However there were some exceptions where the NULL values were more important. Certain countries for example lacked their GDP values; For countries like Russia it doesn't matter because the incidence rate is 0 but for countries like Vietnam which does have dengue cases & deaths it means my analysis will be lacking.
 
@@ -37,18 +37,20 @@ I now had to clean the data and merge it(making_db.sql).
 
 I had to do some final QA in python; I needed to fix the one to many issue (Every country had multiple instances because the years), so I made a pivot table and then flattened it:
 ```
-df = df.pivot_table(['population','total_cases','total_deaths','gdp_val'],['entity','code'],'year').reset_index()
-df.columns = [ '_'.join([str(c) for c in c_list]) for c_list in df.columns.values ]
-df.head()
+df2 = df.pivot_table(['gdp_val','total_cases','total_deaths'],['entity'],'year').reset_index()
+df2.columns = [ '_'.join([str(c) for c in c_list]) for c_list in df2.columns.values ]
+df2.head()
 ```
 I use both the merged table and the flattened pivot table for my analysis.
 ## Analysis
 As stated before there are some NULL values for certain countries that make my analysis incomplete. In total there 516 rows where either total cases, total deaths, or gdp is a null value; For some of these countries all data for all 20 years is missing but for others there are simply small gaps in the data. In total 29 countries have missing data and I decided to remove them as they are of no use and there isn't a value I could replace them with. 
+The top ten countries for mean deaths & mean cases are India, Indonesia, Pakistan, Philippines, Myanmar, Brazil, Malaysia, Thailand, Sri Lanka, & Colombia.<br>
+When mean deaths and cases are viewed separately there are some differences in the top 10 list like Mexico or Pakistan which appear in the top total cases but don't have as many deaths. For mean deaths there were 88 countries that had at least one death in the span of 20 years. By comparison, 109 countries had at least one death.<br>
+Based off the graphs that I made using Tableau there appears to be no connection between GDP & Dengue deaths/cases; India has the msot of amount of cases & has rising deaths despite having a rising GDP. Brazil had a dip in GDP starting in 2014 but it's total cases/deaths remained consistent. Indonesia had a rising GDP but while it did have a small drop(A decrease of ~1-3k deaths) in deaths it maintained a steady amount of cases.
 
- python, &amp; tableau.
+https://public.tableau.com/app/profile/benny.hernandez3887/viz/DenguevsGDP/DenguevsGDP?publish=yes
 
 # TODO
-- FIND POPULATION DATA LINK
 - ADD PY FILE ON HOW YOU MADE FLATTENED PIVOT
 - FINISH TABLEAU DASHBOARD
 - USE SQL ON REGULAR TABLE ANALYSIS
