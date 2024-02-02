@@ -1,3 +1,5 @@
+![image](https://github.com/Xenny-sudo/dengue_fever_gdp_relationship/assets/15963479/3dd0ec66-03a9-4294-9ea4-f4622c1b75ad)
+Tableau Dashboard Link: https://public.tableau.com/app/profile/benny.hernandez3887/viz/DenguevsGDP/DenguevsGDP?publish=yes
 # Relationship between Dengue Fever & GDP($)
 I wanted to perform an analysis of some topic to put skills that I learned in practice; I decided to do an analyis of Gross Domestic Product(GDP$) and a disease. I had to choose a disease and ultimately ended up choosing dengue fever due to its prevalence in my mother country of the Domincan Republic. The goal was to see if a higher GDP results in less dengue fever deaths.<br>
 It's important to note that I'm neither an economist, biologist, or medical doctor; With that being said I have a basic understanding of economics and biology which I picked up in college & high school AP courses.
@@ -48,10 +50,4 @@ The top ten countries for mean deaths & mean cases are India, Indonesia, Pakista
 When mean deaths and cases are viewed separately there are some differences in the top 10 list like Mexico or Pakistan which appear in the top total cases but don't have as many deaths. For mean deaths there were 88 countries that had at least one death in the span of 20 years. By comparison, 109 countries had at least one death.<br>
 Based off the graphs that I made using Tableau there appears to be no connection between GDP & Dengue deaths/cases; India has the msot of amount of cases & has rising deaths despite having a rising GDP. Brazil had a dip in GDP starting in 2014 but it's total cases/deaths remained consistent. Indonesia had a rising GDP but while it did have a small drop(A decrease of ~1-3k deaths) in deaths it maintained a steady amount of cases.
 
-https://public.tableau.com/app/profile/benny.hernandez3887/viz/DenguevsGDP/DenguevsGDP?publish=yes
-
-# TODO
-- ADD PY FILE ON HOW YOU MADE FLATTENED PIVOT
-- FINISH TABLEAU DASHBOARD
-- USE SQL ON REGULAR TABLE ANALYSIS
-- USE PY FOR SOME OTHER DATA ANALYSIS
+Tableau Dashboard Link: https://public.tableau.com/app/profile/benny.hernandez3887/viz/DenguevsGDP/DenguevsGDP?publish=yes
