@@ -48,5 +48,3 @@ As stated before there are some NULL values for certain countries that make my a
 The top ten countries for mean deaths & mean cases are India, Indonesia, Pakistan, Philippines, Myanmar, Brazil, Malaysia, Thailand, Sri Lanka, & Colombia.<br>
 When mean deaths and cases are viewed separately there are some differences in the top 10 list like Mexico or Pakistan which appear in the top total cases but don't have as many deaths. For mean deaths there were 88 countries that had at least one death in the span of 20 years. By comparison, 109 countries had at least one death.<br>
 Based off the graphs that I made using Tableau there appears to be no connection between GDP & Dengue deaths/cases; India has the msot of amount of cases & has rising deaths despite having a rising GDP. Brazil had a dip in GDP starting in 2014 but it's total cases/deaths remained consistent. Indonesia had a rising GDP but while it did have a small drop(A decrease of ~1-3k deaths) in deaths it maintained a steady amount of cases.
-
-Tableau Dashboard Link: https://public.tableau.com/app/profile/benny.hernandez3887/viz/DenguevsGDP/DenguevsGDP?publish=yes
