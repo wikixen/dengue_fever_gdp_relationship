@@ -1,5 +1,4 @@
 ![image](https://github.com/Xenny-sudo/dengue_fever_gdp_relationship/assets/15963479/3dd0ec66-03a9-4294-9ea4-f4622c1b75ad)
-Tableau Dashboard Link: https://public.tableau.com/app/profile/benny.hernandez3887/viz/DenguevsGDP/DenguevsGDP?publish=yes
 # Relationship between Dengue Fever & GDP($)
 I wanted to perform an analysis of some topic to put skills that I learned in practice; I decided to do an analyis of Gross Domestic Product(GDP$) and a disease. I had to choose a disease and ultimately ended up choosing dengue fever due to its prevalence in my mother country of the Domincan Republic. The goal was to see if a higher GDP results in less dengue fever deaths.<br>
 It's important to note that I'm neither an economist, biologist, or medical doctor; With that being said I have a basic understanding of economics and biology which I picked up in college & high school AP courses.
